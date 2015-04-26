@@ -9,7 +9,7 @@
 <html>
 <head>
     <meta name="layout" content="main"/>
-    <title>Welcome to Grails</title>
+    <title>Bienvenu à Toulouse</title>
     <style type="text/css" media="screen">
     #status {
         background-color: #eee;
@@ -89,7 +89,10 @@
 </head>
 
 <body>
+
 <g:form id="rechercheForm" url="[action: 'recherche']">
+
+
     <label>Nom du musée: </label>
     <g:textField name="nomMusee"/><br/>
 
@@ -98,7 +101,7 @@
 
     <label>Nom de la rue: </label>
     <g:textField name="nomRue"/><br/>
-
+    <br/>
     <label>Code postal: </label>
     <g:select name="codePostal"
               noSelection="${['':'    ']}"
@@ -106,9 +109,8 @@
 
 
 
-    <g:actionSubmit value="Rechercher" action="recherche"/>
+    <g:actionSubmit value="Rechercher"  type="button" class="btn btn-info" action="recherche"/>
 </g:form>
-
 <table>
     <thead>
     <tr>
