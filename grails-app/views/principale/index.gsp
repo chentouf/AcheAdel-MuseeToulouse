@@ -91,19 +91,22 @@
 <body>
 
 <g:if test="${listeMussesPreferes.size() > 0}">
-    <fieldset class="form" aria-orientation="right">
-        <div id="museesPrefs">
-            <h4>Mes préférés</h4><br/>
-            <ul>
-            <g:each in="${listeMuseesPreferes}" status="i" var="museePref">
-                <li>${museePref.key} <br/><a href="${createLink(controller: "principale",action: "supprimerMusee",params: [id:museePref.value])}">DEL</a></li>
+
+    <div>
+        <h4>Mes préférés</h4>
+        <ul>
+            <g:each in="${listeMussesPreferes}" status="i" var="mP">
+                <li>${mP.key} <br/><a href="${createLink(controller: "principale",action: "supprimerMusee",params: [id:mP.value])}">DEL</a></li>
             </g:each>
         </ul>
         <a href="${createLink(controller: "demandeVisite",action: "index")}">Effectuer une demande de visite</a>
     </div>
-    </fieldset>
-
 </g:if>
+
+
+
+
+
 <g:form id="rechercheForm" url="[action: 'recherche']">
 
     <fieldset class="form">
@@ -126,6 +129,10 @@
     <g:actionSubmit value="Rechercher"  type="button" class="btn btn-info" action="recherche"/>
     </fieldset>
 </g:form>
+
+
+
+
 <table>
     <thead>
     <tr>
@@ -173,6 +180,9 @@
     </g:each>
     </tbody>
 </table>
+
+
+
 <div class="pagination">
     <g:paginate total="${museeInstanceCount ?: 0}"  controller="principale" action="recherche"  params="${params}"/>
 </div>
