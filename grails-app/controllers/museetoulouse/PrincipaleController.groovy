@@ -31,7 +31,7 @@ class PrincipaleController {
         def listeMussesPreferes = sessionService.getListeMuseesPreferes(session)
 
         if(params.id != null){
-            sessionService.supprimerMusee(session, params.int(id))
+            sessionService.supprimerMusee(session, params.int('id'))
         }
         redirect(action: 'index')
     }

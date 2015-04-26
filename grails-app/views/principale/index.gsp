@@ -96,7 +96,7 @@
         <h4>Mes préférés</h4>
         <ul>
             <g:each in="${listeMussesPreferes}" status="i" var="mP">
-                <li>${mP.key} <br/><a href="${createLink(controller: "principale",action: "supprimerMusee",params: [id:mP.value])}">DEL</a></li>
+                <li>${mP.key} <a href="${createLink(controller: "principale",action: "supprimerMusee",params: [id:mP.value])}">DEL</a></li>
             </g:each>
         </ul>
         <a href="${createLink(controller: "demandeVisite",action: "index")}">Effectuer une demande de visite</a>
