@@ -1,6 +1,7 @@
 package museetoulouse
 
 import grails.transaction.Transactional
+import org.hibernate.criterion.CriteriaSpecification
 
 @Transactional
 class RechercheMuseeService {
@@ -8,9 +9,10 @@ class RechercheMuseeService {
     def serviceMethod() {
 
     }
-    List<Musee> rechercheMusees(String unNom, String unCodePostal, String uneRue) {
+    def rechercheMusees(String unNom, String unCodePostal, String uneRue,int maxP, int offsetP) {
         def criteria = Musee.createCriteria()
-        List<Musee> res = criteria.list {
+        def res = criteria.list (max: maxP, offset: offsetP){
+            setResultTransformer(CriteriaSpecification.DISTINCT_ROOT_ENTITY)
             if (unNom) {
                 like 'nom', "%${unNom}%"
             }
