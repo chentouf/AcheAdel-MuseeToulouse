@@ -90,9 +90,23 @@
 
 <body>
 
+<g:if test="${listeMussesPreferes.size() > 0}">
+    <fieldset class="form" aria-orientation="right">
+        <div id="museesPrefs">
+            <h4>Mes préférés</h4><br/>
+            <ul>
+            <g:each in="${listeMuseesPreferes}" status="i" var="museePref">
+                <li>${museePref.key} <br/><a href="${createLink(controller: "principale",action: "supprimerMusee",params: [id:museePref.value])}">DEL</a></li>
+            </g:each>
+        </ul>
+        <a href="${createLink(controller: "demandeVisite",action: "index")}">Effectuer une demande de visite</a>
+    </div>
+    </fieldset>
+
+</g:if>
 <g:form id="rechercheForm" url="[action: 'recherche']">
 
-
+    <fieldset class="form">
     <label>Nom du musée: </label>
     <g:textField name="nomMusee"/><br/>
 
@@ -110,6 +124,7 @@
 
 
     <g:actionSubmit value="Rechercher"  type="button" class="btn btn-info" action="recherche"/>
+    </fieldset>
 </g:form>
 <table>
     <thead>
@@ -151,7 +166,9 @@
 
             <td>${fieldValue(bean: museeInstance, field: "gestionnaire")}</td>
 
-
+            <g:if test="${!session.listeMusee.containsValue(new Integer(museeInstance.id.intValue()))}">
+                <td><a   href="${createLink(controller: "principale",action: "ajouterMuseesPreferes",params: [id:fieldValue(bean: museeInstance, field: "id")])}"> ADD</a></td>
+            </g:if>
         </tr>
     </g:each>
     </tbody>
