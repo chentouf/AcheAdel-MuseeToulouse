@@ -16,7 +16,7 @@ class DemandeVisiteController {
         [listeMussesPreferes: listeMussesPreferes]
     }
 
-    def demande(){
+    def creationDemande(){
         Calendar c1 = GregorianCalendar.getInstance()
         c1.clear()
         c1.set(params.int('dateDebutPeriode_year') ?: 0, (params.int('dateDebutPeriode_month') ?: 0)-1, params.int('dateDebutPeriode_day') ?: 1);

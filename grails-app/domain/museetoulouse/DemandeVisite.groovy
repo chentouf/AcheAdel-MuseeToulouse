@@ -12,14 +12,26 @@ class DemandeVisite {
     static hasMany = [musees:Musee]
 
     static belongsTo = Musee
+    static  mapping = {
+        musees fetch: 'join'
+    }
 
     static constraints = {
+        code blank: false
+        statut inList: ['En cours de traitement','Confirmée','Refusée']
         nbPersonnes max: 6, min: 1
-        dateDebutPeriode validator: {val ->
-            val >= new Date()
+        dateDebutPeriode validator: {
+            Calendar c1 = GregorianCalendar.getInstance()
+            c1.set(Calendar.HOUR_OF_DAY, 0);
+            c1.set(Calendar.MINUTE, 0);
+            c1.set(Calendar.SECOND, 0);
+            c1.set(Calendar.MILLISECOND, 0);
+            if (!(it >= c1.getTime()))
+                return 'demandeVisite.validation.dateDebutPeriode'
         }
         dateFinPeriode validator: {val, obj ->
-            val >= obj.dateDebutPeriode
+            if (!val?.after(obj.dateDebutPeriode ?: val))
+                return 'demandeVisite.validation.dateFinPeriode'
         }
     }
 

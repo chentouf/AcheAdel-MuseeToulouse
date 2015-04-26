@@ -4,13 +4,16 @@
   Date: 4/26/15
   Time: 2:14 AM
 --%>
-
+<%@ page contentType="text/html;charset=UTF-8" %>
+<%@ page contentType="text/html;charset=UTF-8" %>
 <%@ page import="museetoulouse.Adresse" contentType="text/html;charset=UTF-8" %>
-<html>
+<html xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html">
 <head>
     <meta name="layout" content="main"/>
     <title>Bienvenu à Toulouse</title>
+    <r:require modules="bootstrap"/>
     <style type="text/css" media="screen">
+
     #status {
         background-color: #eee;
         border: .2em solid #fff;
@@ -71,6 +74,29 @@
         list-style-position: inside;
         margin: 0.25em 0;
     }
+    .container {
+        position: relative;
+    }
+    nav {
+        position: absolute;
+        left: 0px;
+        width: 200px;
+    }
+    section {
+        /* position is static by default */
+        margin-left: 200px;
+    }
+    footer {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        height: 70px;
+        background-color: white;
+        width: 100%;
+    }
+    body {
+        margin-bottom: 120px;
+    }
 
     @media screen and (max-width: 480px) {
         #status {
@@ -89,48 +115,62 @@
 </head>
 
 <body>
-
 <g:if test="${listeMussesPreferes.size() > 0}">
 
-    <div>
-        <h4>Mes préférés</h4>
-        <ul>
-            <g:each in="${listeMussesPreferes}" status="i" var="mP">
-                <li>${mP.key} <a href="${createLink(controller: "principale",action: "supprimerMusee",params: [id:mP.value])}">DEL</a></li>
-            </g:each>
-        </ul>
-        <a href="${createLink(controller: "demandeVisite",action: "index")}">Effectuer une demande de visite</a>
+    <fieldset>
+    <div class="fieldcontain" style="background: #E4D8FA">
+        <table>
+            <thead>
+            <th>Mes préférés</th>
+            <th>Supprimer</th>
+            </thead>
+            <tbody>
+
+                        <g:each in="${listeMussesPreferes}" status="i" var="mP">
+                            <tr class="${(i % 2) == 0 ? 'even' : 'odd'}">
+                            <td><li>${mP.key} </li></td>
+                            <td><a href="${createLink(controller: "principale",action: "supprimerMusee",params: [id:mP.value])}">DEL</a>
+                            </td>
+                            </tr>
+                        </g:each>
+            </tr>
+            <td>
+
+                <a href="${createLink(controller: "demandeVisite",action: "index")}">Effectuer une demande de visite</a>
+            </td>
+            </tbody>
+        </table>
+
+
     </div>
+    </fieldset>
 </g:if>
 
 
 
-
-
-<g:form id="rechercheForm" url="[action: 'recherche']">
+<g:form  url="[action: 'recherche']">
 
     <fieldset class="form">
-    <label>Nom du musée: </label>
+        <div class="fieldcontain" style = "margin-left: auto">
+            <label>Nom du musée: </label>
+
     <g:textField name="nomMusee"/><br/>
 
 
-
-
     <label>Nom de la rue: </label>
-    <g:textField name="nomRue"/><br/>
+
+    <g:textField name="nomRue"/>
     <br/>
     <label>Code postal: </label>
     <g:select name="codePostal"
               noSelection="${['':'    ']}"
               from="${Adresse.list().codePostal.unique()}" />
 
-
-
-    <g:actionSubmit value="Rechercher"  type="button" class="btn btn-info" action="recherche"/>
+    <g:actionSubmit value="Rechercher"  action="recherche"/>
+        </div>
     </fieldset>
+
 </g:form>
-
-
 
 
 <table>
@@ -151,7 +191,7 @@
 
         <th><g:message code="musee.gestionnaire.label" default="Gestionnaire" /></th>
 
-        <th></th>
+        <th><g:message code="Favoris" default="Favoris" /></th>
 
     </tr>
     </thead>
