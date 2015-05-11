@@ -6,6 +6,7 @@ class Adresse {
     String rue
     String codePostal
     String ville
+    String state
 
 
     static constraints = {
@@ -13,6 +14,7 @@ class Adresse {
         numero nullable: true
         codePostal blank:false
         ville blank:false
+        state inList:["GA", "NC", "SC", "VA"], blank:false
     }
 
     String toString() {

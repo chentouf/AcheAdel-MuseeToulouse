@@ -86,13 +86,30 @@ grails.hibernate.pass.readonly = false
 grails.hibernate.osiv.readonly = false
 
 environments {
-    development {
-        grails.logging.jul.usebridge = true
-    }
+
     production {
         grails.logging.jul.usebridge = false
         // TODO: grails.serverURL = "http://www.changeme.com"
     }
+    development
+            {
+                grails.serverURL   = "http://localhost:8080/${appName}"
+                /*
+                 * En mettant ${appName} on est sur que sur le tag form action=/Workflow/achat/besoinOut
+                 * "/Work
+                 */
+                isae.repertoireDoc = './docs'
+                grails.plugin.springsecurity.cas.active			= false
+            }
+    test
+            {
+                //grails.serverURL   = "http://ori-oai:8195/${appName}-${grails.util.Environment.current.name}"
+                //grails.serverURL   = "http://ori-oai-int:8195/${appName}Test"
+                //isae.repertoireDoc = '/usr/local/workflows/test'
+                grails.serverURL   = "http://si-devel.isae.fr/${appName}Test"
+                isae.repertoireDoc = '/usr/local/tomcat/fichiersWorkflow/test'
+                grails.plugin.springsecurity.cas.active			= true
+            }
 }
 
 // log4j configuration
@@ -142,3 +159,28 @@ grails.resources.modules = {
         resource url:'js/bootstrap/bootstrap-typeahead.js'
     }
 }
+
+// Added by the Spring Security Core plugin:
+grails.plugin.springsecurity.errors.login.fail	= "Désolé, votre nom d'utilisateur/mot de passe est incorrect."
+grails.plugin.springsecurity.ldap.context.managerDn = ''
+grails.plugin.springsecurity.ldap.context.managerPassword = ''
+grails.plugin.springsecurity.userLookup.userDomainClassName = 'util.museetoulouse.auth.User'
+grails.plugin.springsecurity.userLookup.authorityJoinClassName = 'util.museetoulouse.auth.UserRole'
+grails.plugin.springsecurity.authority.className = 'util.museetoulouse.auth.Role'
+grails.plugin.springsecurity.useSwitchUserFilter = true
+grails.plugin.springsecurity.switchUser.switchUserUrl = '/j_spring_security_switch_user'
+grails.plugin.springsecurity.switchUser.exitUserUrl = '/j_spring_security_exit_user'
+grails.plugin.springsecurity.controllerAnnotations.staticRules = [
+	'/':                              ['permitAll'],
+	'/index':                         ['permitAll'],
+	'/index.gsp':                     ['permitAll'],
+	'/assets/**':                     ['permitAll'],
+	'/**/js/**':                      ['permitAll'],
+	'/**/css/**':                     ['permitAll'],
+	'/**/images/**':                  ['permitAll'],
+	'/**/favicon.ico':                ['permitAll'],
+    '/j_spring_security_switch_user': ['ROLE_W_SWITCH_USER', 'isFullyAuthenticated()'],
+    '/j_spring_security_exit_user':   ['permitAll'],
+    '/dbconsole/**':                 ['permitAll']
+]
+

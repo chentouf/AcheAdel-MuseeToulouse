@@ -1,8 +1,10 @@
 package museetoulouse
 
+import grails.plugin.springsecurity.annotation.Secured
 import grails.transaction.Transactional
 
 @Transactional
+@Secured(['ROLE_ADMIN'])
 class DemandeVisiteService {
 
     def createDemande(def listeMusees,Date dateDebutPeriode, Date dateFinPeriode, int nbPersonnes) {

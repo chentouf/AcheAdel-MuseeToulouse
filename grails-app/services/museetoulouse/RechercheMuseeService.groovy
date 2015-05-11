@@ -9,7 +9,7 @@ class RechercheMuseeService {
     def serviceMethod() {
 
     }
-    def rechercheMusees(String unNom, String unCodePostal, String uneRue,int maxP, int offsetP) {
+    def rechercheMusees(String unNom, String unCodePostal,String uneState, String uneRue,int maxP, int offsetP) {
         def criteria = Musee.createCriteria()
         def res = criteria.list (max: maxP, offset: offsetP){
             setResultTransformer(CriteriaSpecification.DISTINCT_ROOT_ENTITY)
@@ -19,6 +19,11 @@ class RechercheMuseeService {
             if (unCodePostal) {
                 adresse {
                     like 'codePostal', "${unCodePostal}"
+                }
+            }
+            if (uneState) {
+                adresse {
+                    like 'state', "%${uneState}%"
                 }
             }
             if (uneRue) {

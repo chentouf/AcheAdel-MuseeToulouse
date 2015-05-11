@@ -165,7 +165,9 @@
     <g:select name="codePostal"
               noSelection="${['':'    ']}"
               from="${Adresse.list().codePostal.unique()}" />
-
+    <g:select name="state"
+              noSelection="${['':'    ']}"
+              from="${Adresse.list().state.unique()}" />
     <g:actionSubmit value="Rechercher"  action="recherche"/>
         </div>
     </fieldset>
@@ -212,6 +214,7 @@
             <td>${fieldValue(bean: museeInstance, field: "horairesOuverture")}</td>
 
             <td>${fieldValue(bean: museeInstance, field: "gestionnaire")}</td>
+
 
             <g:if test="${!session.listeMusee.containsValue(new Integer(museeInstance.id.intValue()))}">
                 <td><a   href="${createLink(controller: "principale",action: "ajouterMuseesPreferes",params: [id:fieldValue(bean: museeInstance, field: "id")])}"> ADD</a></td>
